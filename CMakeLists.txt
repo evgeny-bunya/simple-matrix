@@ -13,7 +13,8 @@ set(GTEST_ROOT "googletest")
 
 add_library(matrix_lib
             matrix.hpp
-            matrix.cpp)
+            matrix.cpp
+            matrix_iterators.cpp)
 
 add_executable(${PROJECT_NAME}
                main.cpp)
