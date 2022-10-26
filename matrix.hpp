@@ -56,8 +56,8 @@ class Matrix
     class ConstMatrixIterator
     {
     public:
-        static ConstMatrixIterator begin(Matrix& matrix) { return ConstMatrixIterator(matrix, 0, 0);}
-        static ConstMatrixIterator end(Matrix& matrix) { return ConstMatrixIterator(matrix, matrix.data.size(), 0);}
+        static ConstMatrixIterator begin(const Matrix& matrix) { return ConstMatrixIterator(matrix, 0, 0);}
+        static ConstMatrixIterator end(const Matrix& matrix) { return ConstMatrixIterator(matrix, matrix.data.size(), 0);}
         double operator*() const;
         ConstMatrixIterator& operator++();
         const ConstMatrixIterator operator++(int);
@@ -91,8 +91,8 @@ public:
     size_t getWidth() const;
     MatrixIterator begin();
     MatrixIterator end();
-    ConstMatrixIterator cbegin();
-    ConstMatrixIterator cend();
+    ConstMatrixIterator cbegin() const;
+    ConstMatrixIterator cend() const;
     void print();
 private:
     std::vector<MatrixRow> data;

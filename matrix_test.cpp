@@ -194,6 +194,14 @@ TEST(Matrix, iteratorCheck)
             index++;
         }
     }
+    // const iterator check
+    index = 0;
+    const Matrix constMatrix = matrix;
+    for (auto it = constMatrix.cbegin() ; it != constMatrix.cend() ; ++it)
+    {
+        EXPECT_DOUBLE_EQ(*it, -index * 2);
+        index++;
+    }
 }
 
 TEST(Matrix, exceptionCheck)

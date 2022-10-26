@@ -151,7 +151,7 @@ Matrix operator-(Matrix left, const Matrix& right)
 size_t Matrix::getHeight() const {return data.size();}
 size_t Matrix::getWidth() const
 {
-    if (data.size() > 0)
+    if (!data.empty())
     {
         return data[0].getLength();
     }
@@ -179,12 +179,12 @@ Matrix::MatrixIterator Matrix::end()
     return MatrixIterator::end(*this);
 }
 
-Matrix::ConstMatrixIterator Matrix::cbegin()
+Matrix::ConstMatrixIterator Matrix::cbegin() const
 {
     return ConstMatrixIterator::begin(*this);
 }
 
-Matrix::ConstMatrixIterator Matrix::cend()
+Matrix::ConstMatrixIterator Matrix::cend() const
 {
     return ConstMatrixIterator::end(*this);
 }
