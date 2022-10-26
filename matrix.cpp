@@ -59,7 +59,7 @@ void Matrix::MatrixRow::print() const
 {
     for (double value : data)
     {
-        std::cout << value;
+        std::cout << value << " ";
     }
     std::cout << std::endl;
 }
