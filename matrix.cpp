@@ -1,4 +1,5 @@
 #include "matrix.hpp"
+#include <iostream>
 
 Matrix::MatrixRow::MatrixRow(int length) {
     data.resize(length);
@@ -52,7 +53,16 @@ Matrix::MatrixRow& Matrix::MatrixRow::operator-=(const Matrix::MatrixRow& right)
     return *this;
 }
 
-size_t Matrix::MatrixRow::getLength() {return data.size();}
+size_t Matrix::MatrixRow::getLength() const {return data.size();}
+
+void Matrix::MatrixRow::print() const
+{
+    for (double value : data)
+    {
+        std::cout << value;
+    }
+    std::cout << std::endl;
+}
 
 Matrix::Matrix(int rows, int columns) {
     if (rows > 0 && columns > 0)
@@ -138,8 +148,8 @@ Matrix operator-(Matrix left, const Matrix& right)
     return left;
 }
 
-size_t Matrix::getHeight() {return data.size();}
-size_t Matrix::getWidth()
+size_t Matrix::getHeight() const {return data.size();}
+size_t Matrix::getWidth() const
 {
     if (data.size() > 0)
     {
@@ -148,6 +158,14 @@ size_t Matrix::getWidth()
     else
     {
         return 0;
+    }
+}
+
+void Matrix::print()
+{
+    for (const auto& row : data)
+    {
+        row.print();
     }
 }
 
@@ -160,6 +178,17 @@ Matrix::MatrixIterator Matrix::end()
 {
     return MatrixIterator::end(*this);
 }
+
+Matrix::ConstMatrixIterator Matrix::cbegin()
+{
+    return ConstMatrixIterator::begin(*this);
+}
+
+Matrix::ConstMatrixIterator Matrix::cend()
+{
+    return ConstMatrixIterator::end(*this);
+}
+
 
 Matrix::MatrixIterator::MatrixIterator(Matrix& matrix, size_t rowIndex, size_t columnIndex):
    matrixRef(matrix), rowId(rowIndex), columnId(columnIndex)
@@ -189,6 +218,34 @@ Matrix::MatrixIterator& Matrix::MatrixIterator::operator++()
 Matrix::MatrixIterator Matrix::MatrixIterator::operator++(int)
 {
     MatrixIterator it(*this);
+    ++(*this);
+    return it;
+}
+
+Matrix::ConstMatrixIterator::ConstMatrixIterator(const Matrix& matrix, size_t rowIndex, size_t columnIndex):
+        matrixRef(matrix), rowId(rowIndex), columnId(columnIndex)
+{
+}
+
+double Matrix::ConstMatrixIterator::operator*() const
+{
+    return matrixRef[rowId][columnId];
+}
+
+Matrix::ConstMatrixIterator& Matrix::ConstMatrixIterator::operator++()
+{
+    columnId++;
+    if (columnId >= matrixRef.getWidth())
+    {
+        columnId = 0;
+        rowId++;
+    }
+    return *this;
+}
+
+const Matrix::ConstMatrixIterator Matrix::ConstMatrixIterator::operator++(int)
+{
+    ConstMatrixIterator it(*this);
     ++(*this);
     return it;
 }

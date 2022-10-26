@@ -18,10 +18,11 @@ class Matrix
         MatrixRow(int length);
         double operator[](int id) const;
         double& operator[](int id);
-        size_t getLength();
+        size_t getLength() const;
         MatrixRow& operator|=(const MatrixRow& right);
         MatrixRow& operator+=(const MatrixRow& right);
         MatrixRow& operator-=(const MatrixRow& right);
+        void print() const;
     private:
         std::vector<double> data;
     };
@@ -51,6 +52,31 @@ class Matrix
         size_t rowId;
         size_t columnId;
     };
+
+    class ConstMatrixIterator
+    {
+    public:
+        static ConstMatrixIterator begin(Matrix& matrix) { return ConstMatrixIterator(matrix, 0, 0);}
+        static ConstMatrixIterator end(Matrix& matrix) { return ConstMatrixIterator(matrix, matrix.data.size(), 0);}
+        double operator*() const;
+        ConstMatrixIterator& operator++();
+        const ConstMatrixIterator operator++(int);
+        friend bool operator==(const ConstMatrixIterator& left, const ConstMatrixIterator& right)
+        {
+            return (&left.matrixRef == &right.matrixRef) &&
+                   (left.rowId == right.rowId) &&
+                   (left.columnId == right.columnId);
+        }
+        friend bool operator!=(const ConstMatrixIterator& left, const ConstMatrixIterator& right)
+        {
+            return !operator==(left, right);
+        }
+    private:
+        ConstMatrixIterator(const Matrix& matrix, size_t rowIndex, size_t columnIndex);
+        const Matrix& matrixRef;
+        size_t rowId;
+        size_t columnId;
+    };
 public:
     Matrix(int rows, int columns);
     const MatrixRow& operator[](int id) const;
@@ -61,10 +87,13 @@ public:
     friend Matrix operator|(Matrix left, const Matrix& right);
     friend Matrix operator+(Matrix left, const Matrix& right);
     friend Matrix operator-(Matrix left, const Matrix& right);
-    size_t getHeight();
-    size_t getWidth();
+    size_t getHeight() const;
+    size_t getWidth() const;
     MatrixIterator begin();
     MatrixIterator end();
+    ConstMatrixIterator cbegin();
+    ConstMatrixIterator cend();
+    void print();
 private:
     std::vector<MatrixRow> data;
 };
