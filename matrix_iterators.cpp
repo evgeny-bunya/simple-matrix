@@ -25,7 +25,7 @@ Matrix::MatrixIterator& Matrix::MatrixIterator::operator++()
     return *this;
 }
 
-Matrix::MatrixIterator Matrix::MatrixIterator::operator++(int)
+const Matrix::MatrixIterator Matrix::MatrixIterator::operator++(int)
 {
     MatrixIterator it(*this);
     ++(*this);

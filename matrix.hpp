@@ -15,7 +15,7 @@ class Matrix
     class MatrixRow
     {
     public:
-        MatrixRow(int length);
+        explicit MatrixRow(int length);
         double operator[](int id) const;
         double& operator[](int id);
         size_t getLength() const;
@@ -30,12 +30,12 @@ class Matrix
     class MatrixIterator
     {
     public:
-        static MatrixIterator begin(Matrix& matrix) { return MatrixIterator(matrix, 0, 0);}
-        static MatrixIterator end(Matrix& matrix) { return MatrixIterator(matrix, matrix.data.size(), 0);}
+        static MatrixIterator begin(Matrix& matrix) { return {matrix, 0, 0};}
+        static MatrixIterator end(Matrix& matrix) { return {matrix, matrix.data.size(), 0};}
         double& operator*() const;
         double* operator->() const;
         MatrixIterator& operator++();
-        MatrixIterator operator++(int);
+        const MatrixIterator operator++(int);
         friend bool operator==(const MatrixIterator& left, const MatrixIterator& right)
         {
             return (&left.matrixRef == &right.matrixRef) &&
@@ -56,8 +56,8 @@ class Matrix
     class ConstMatrixIterator
     {
     public:
-        static ConstMatrixIterator begin(const Matrix& matrix) { return ConstMatrixIterator(matrix, 0, 0);}
-        static ConstMatrixIterator end(const Matrix& matrix) { return ConstMatrixIterator(matrix, matrix.data.size(), 0);}
+        static ConstMatrixIterator begin(const Matrix& matrix) { return {matrix, 0, 0};}
+        static ConstMatrixIterator end(const Matrix& matrix) { return {matrix, matrix.data.size(), 0};}
         double operator*() const;
         ConstMatrixIterator& operator++();
         const ConstMatrixIterator operator++(int);
