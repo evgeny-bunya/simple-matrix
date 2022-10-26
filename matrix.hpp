@@ -4,7 +4,8 @@
  * operator | is concatenation C = (A | B)
  * operator + is per-element summary C = A + B
  * operator - is per-element subtraction C = A - B
- * custom iterator support
+ * operator [] are supported
+ * custom iterators are supported
  * copy and move ctors are default (since we are storing std::vector only)
  */
 #pragma once

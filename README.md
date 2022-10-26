@@ -4,9 +4,12 @@ it supports:
 * copy / move ctors
 * matrix concatenation
 * sum of matrices
+* google tests are provided
 
 ***
-### How to build
-* just use cmake (min version 3.10)
-* 
+### How to build without IDE with c++17 compatible compiler
+* install cmake (min version 3.10)
+* go to work folder
+* execute cmake .
+* check build folder and run make
 
